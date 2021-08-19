@@ -1,21 +1,20 @@
-let numInput = +prompt('Enter the number of fields');
-for(let i = 1; i <= numInput;i++) {
-    let kol = numInput;
-    let input = document.createElement('input');
-    input.classList.add('input-item');
-    if (i === kol) {
-        input.classList.add('margin-zero');
-    }
-    if(i % 2 != 0) {
-        input.classList.add('bcg');
-    }
-    input.value = `Index ${i}`;
-    if (i % 3 === 0) {
-        input.value = '';
-        input.placeholder = 'Some text';
-    }
-    document.querySelector('form').querySelector('div').before(input);
-}
+// let numInput = +prompt('Enter the number of fields');
+// for(let i = 1; i <= numInput;i++) {
+//     let input = document.createElement('input');
+//     input.classList.add('input-item');
+//     if (i === numInput) {
+//         input.classList.add('margin-zero');
+//     }
+//     if(i % 2 != 0) {
+//         input.classList.add('bcg');
+//     }
+//     input.value = `Index ${i}`;
+//     if (i % 3 === 0) {
+//         input.value = '';
+//         input.placeholder = 'Some text';
+//     }
+//     document.querySelector('form').querySelector('div').before(input);
+// }
 
 let h2 = document.createElement('h2');
 let btnStart = document.createElement('button');
@@ -24,21 +23,21 @@ let interval;
 
 
 function go () {
-    let s =56;
-    let m = 59;
-    let h = 0;
+    let day = new Date();
+    let second = day.getSeconds();
+    let minute = day.getMinutes();
+    let hour = day.getHours();
     interval = setInterval(function () {
-        if (m === 59 && s === 59) {
+        if (minute === 59 && second === 59) {
             s = 0;
             m = 0;
             h++;
         }
-        if(s === 59){
-            s = 0;
-            ++m;
+        if(second === 59){
+            second = 0;
+            ++minute;
         }
-        h2.innerHTML = `${(h < 10) ? '0' + h : h}:${(m < 10) ? '0' + m : m}:${(s < 10) ? '0' + s++ : s++}`;
-       
+        h2.innerHTML = `${(hour < 10) ? '0' + hour : hour}:${(minute < 10) ? '0' + minute : minute}:${(second < 10) ? '0' + second++ : second++}`;
     },1000);
 }
 
@@ -47,13 +46,9 @@ function stop () {
     clearInterval(interval);
 }
 
-btnStart.addEventListener('click', function () {
-    go();
-});
+btnStart.addEventListener('click', go);
 
-btnEnd.addEventListener('click', function () {
-    stop();
-});
+btnEnd.addEventListener('click', stop);
 
 
 btnStart.innerHTML = 'Start';
@@ -79,13 +74,8 @@ let teaPlease = {
     message: 'Wanna some tea instead of coffee?',
 };
 
-function showTea () {
-    setTimeout(() => {
-        console.log(this.message);
-    }, 4000);
-}
-
 coffeeMachine.start();
 
-let st = showTea.bind(teaPlease);
-st();
+let bindFunc = coffeeMachine.start.bind(teaPlease);
+
+bindFunc();
