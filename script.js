@@ -29,9 +29,9 @@ function go () {
     let hour = day.getHours();
     interval = setInterval(function () {
         if (minute === 59 && second === 59) {
-            s = 0;
-            m = 0;
-            h++;
+            second = 0;
+            minute = 0;
+            hour++;
         }
         if(second === 59){
             second = 0;
